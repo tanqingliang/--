@@ -1,0 +1,26 @@
+﻿﻿################################################################################
+# 过滤Git Push文件
+################################################################################
+.idea/
+.vs/
+packages/
+Release/
+./WebApp/
+obj/
+bin/
+node_modules/
+*.pdb
+NodeJS/
+App/
+app_websocke/
+# *.command
+*.sh
+~$*.xlsx
+data/
+*.DS_Store
+GroupDocs.Conversion/
+doc/.DS_Store
+python/
+service/Sync.Veeva/sql.sql
+*.lock
+*lock.json
