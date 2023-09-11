@@ -24,3 +24,4 @@ python/
 service/Sync.Veeva/sql.sql
 *.lock
 *lock.json
+*.txt
