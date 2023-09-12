@@ -11,9 +11,9 @@ using xiaozaixiaoshuo.Libs;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 
-// await SuiYue.GetList("横推永生，从神象镇狱劲开始", false, "/read/59269098.html");
+// await SuiYue.GetList("横推永生，从神象镇狱劲开始", "/read/59269098.html", false);
 
-await SuiYue.GetList("洪荒二郎传", "/read/54239.html", true, "第四百一十章 逆天凤翎燃！本命神通现！");
+// await SuiYue.GetList("洪荒二郎传", "/read/54239.html", true);
 
 
 
