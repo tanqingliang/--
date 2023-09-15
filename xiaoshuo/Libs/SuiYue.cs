@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 
-namespace xiaozaixiaoshuo.Libs
+namespace xiaoshuo.Libs
 {
 	/// <summary>
 	/// 岁月小说网
