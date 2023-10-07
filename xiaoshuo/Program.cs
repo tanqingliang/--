@@ -17,7 +17,9 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 // await SuiYue.GetList("谍影：命令与征服", "/read/51502089.html", false);
 
-await SuiYue.GetList("律师本色", "https://www.suiyuexs.com/read/27916896.html", false);
+// await SuiYue.GetList("律师本色", "https://www.suiyuexs.com/read/27916896.html", false);
+
+await BiQu.GetList("从破碎虚空开始", "https://www.biqubao1.com/book/43799/", true);
 
 
 
