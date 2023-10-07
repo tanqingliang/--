@@ -16,7 +16,8 @@ namespace xiaoshuo.Libs
 		// 域名
 		const string domian = "https://www.suiyuexs.com";
 
-
+		// 字符集
+		readonly static Encoding encoding = Encoding.GetEncoding("gbk");
 
 		// 获取文章列表
 		public static async Task GetList(string name, string url, bool isTitle = true, string startTitle = null)
@@ -44,7 +45,7 @@ namespace xiaoshuo.Libs
 			{
 				url = domian + url;
 			}
-			var doc = await web.LoadFromWebAsync(url, Encoding.GetEncoding("gbk"));
+			var doc = await web.LoadFromWebAsync(url, encoding);
 
 			var list = doc.DocumentNode.SelectNodes("//div[@class='book-chapter-list']/ul[2]/li/a");
 
@@ -73,7 +74,7 @@ namespace xiaoshuo.Libs
 				var web = new HtmlWeb();
 				Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-				var doc = await web.LoadFromWebAsync(domian + url, Encoding.GetEncoding("gbk"));
+				var doc = await web.LoadFromWebAsync(domian + url, encoding);
 
 				string content = doc.DocumentNode.InnerHtml;
 
@@ -94,7 +95,7 @@ namespace xiaoshuo.Libs
 				{
 					url = domian + url;
 				}
-				doc = await web.LoadFromWebAsync(url, Encoding.GetEncoding("gbk"));
+				doc = await web.LoadFromWebAsync(url, encoding);
 
 				content = doc.DocumentNode.InnerText;
 				content = content

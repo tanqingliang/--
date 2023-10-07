@@ -7,14 +7,11 @@ using HtmlAgilityPack;
 
 namespace xiaoshuo.Libs
 {
-	/// <summary>
-	/// 笔趣E
-	/// </summary>
-	public class BiQu
+	public class XFueDu
 	{
 
 		// 域名
-		const string domian = "https://www.biqubao1.com/";
+		const string domian = "http://www.xfuedu.org/";
 
 		// 字符集
 		readonly static Encoding encoding = Encoding.GetEncoding("UTF-8");
@@ -48,7 +45,7 @@ namespace xiaoshuo.Libs
 			}
 			var doc = await web.LoadFromWebAsync(url, encoding);
 
-			var list = doc.DocumentNode.SelectNodes("//div[@id='list']/dl/dd/a");
+			var list = doc.DocumentNode.SelectNodes("//div[@class='section-box'][2]/ul[@class='section-list fix']/li/a");
 
 
 			foreach (var item in list)
@@ -59,10 +56,11 @@ namespace xiaoshuo.Libs
 
 				isRead = true;
 
-				await GetInfo(fileName, isTitle, item.InnerText, item.Attributes["href"].Value);
+				await GetInfo(fileName, isTitle, item.InnerText, url + item.Attributes["href"].Value);
 			}
 
 		}
+
 
 
 		// 获取文章详细
@@ -71,8 +69,6 @@ namespace xiaoshuo.Libs
 
 			try
 			{
-
-
 				// From Web
 				var web = new HtmlWeb();
 				Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -80,21 +76,18 @@ namespace xiaoshuo.Libs
 				var doc = await web.LoadFromWebAsync(domian + url, encoding);
 
 				string content = doc.DocumentNode.SelectSingleNode("//div[@id='content']").InnerText;
-
-				var index = content.IndexOf("看最新章节内容下载爱阅小说app");
-				Console.WriteLine(index);
-				if (index > 0)
-				{
-					content = content.Substring(0, index);
-				}
+				// Console.WriteLine(content);
 
 				content = content
+				.Replace("                        章节错误,点此举报(免注册),举报后维护人员会在两分钟内校正章节内容,请耐心等待,并刷新页面。", "")
+				.Replace("                        ", "\t")
 				.Replace("　　", "\n\t");
+
+
 
 				var data = new List<string>() { content, string.Empty };
 
 				if (isTitle) data.Insert(0, title);
-
 
 				await File.AppendAllLinesAsync(fileName, data);
 			}
@@ -104,6 +97,8 @@ namespace xiaoshuo.Libs
 			}
 
 		}
+
+
 
 
 	}
