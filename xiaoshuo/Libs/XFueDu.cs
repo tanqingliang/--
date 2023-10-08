@@ -56,7 +56,19 @@ namespace xiaoshuo.Libs
 
 				isRead = true;
 
-				await GetInfo(fileName, isTitle, item.InnerText, url + item.Attributes["href"].Value);
+				var content = await GetInfo(url + item.Attributes["href"].Value);
+
+				content = content
+				.Replace("                        章节错误,点此举报(免注册),举报后维护人员会在两分钟内校正章节内容,请耐心等待,并刷新页面。", "")
+				.Replace("                        ", "\t")
+				.Replace("　　", "\n\t");
+
+				var data = new List<string>() { content, string.Empty };
+
+				if (isTitle) data.Insert(0, item.InnerText);
+
+				await File.AppendAllLinesAsync(fileName, data);
+
 			}
 
 		}
@@ -64,7 +76,7 @@ namespace xiaoshuo.Libs
 
 
 		// 获取文章详细
-		public static async Task GetInfo(string fileName, bool isTitle, string title, string url)
+		public static async Task<string> GetInfo(string url)
 		{
 
 			try
@@ -78,22 +90,30 @@ namespace xiaoshuo.Libs
 				string content = doc.DocumentNode.SelectSingleNode("//div[@id='content']").InnerText;
 				// Console.WriteLine(content);
 
-				content = content
-				.Replace("                        章节错误,点此举报(免注册),举报后维护人员会在两分钟内校正章节内容,请耐心等待,并刷新页面。", "")
-				.Replace("                        ", "\t")
-				.Replace("　　", "\n\t");
+				// content = content
+				// .Replace("                        章节错误,点此举报(免注册),举报后维护人员会在两分钟内校正章节内容,请耐心等待,并刷新页面。", "")
+				// .Replace("                        ", "\t")
+				// .Replace("　　", "\n\t");
+
+				var next = doc.DocumentNode.SelectSingleNode("//div[@class='section-opt m-bottom-opt']/a[3]");
+				if (next.InnerText == "下一页")
+				{
+					content += await GetInfo(domian + next.Attributes["href"].Value);
+				}
 
 
+				return content;
 
-				var data = new List<string>() { content, string.Empty };
+				// var data = new List<string>() { content, string.Empty };
 
-				if (isTitle) data.Insert(0, title);
+				// if (isTitle) data.Insert(0, title);
 
-				await File.AppendAllLinesAsync(fileName, data);
+				// await File.AppendAllLinesAsync(fileName, data);
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine($"****************文章获取异常：{ex.Message}*******************");
+				return string.Empty;
 			}
 
 		}

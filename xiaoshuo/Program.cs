@@ -21,7 +21,7 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 // await BiQu.GetList("从破碎虚空开始", "https://www.biqubao1.com/book/43799/", true);
 
-await XFueDu.GetList("盘龙开端之纵横三界", "http://www.xfuedu.org/bxwx/28764/", true);
+await XFueDu.GetList("盘龙开端之纵横三界", "http://www.xfuedu.org/bxwx/28764/", true, "盘龙宇宙世界观");
 
 
 
